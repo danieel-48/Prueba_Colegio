@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Prueba_ColegioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asignaturas">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Calificaciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Asignatura" Type="bigint" />
+          <Property Name="Nombre_Asignatura" Type="varchar" MaxLength="50" />
+          <Property Name="Calificacion" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Estudiantes">
+          <Key>
+            <PropertyRef Name="Identificación" />
+          </Key>
+          <Property Name="Identificación" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" />
+          <Property Name="Edad" Type="smallint" />
+          <Property Name="Dirección" Type="varchar" MaxLength="100" />
+          <Property Name="Teléfono" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Profesores">
+          <Key>
+            <PropertyRef Name="Identificación" />
+          </Key>
+          <Property Name="Identificación" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" />
+          <Property Name="Edad" Type="smallint" />
+          <Property Name="Dirección" Type="varchar" MaxLength="100" />
+          <Property Name="Teléfono" Type="bigint" />
+        </EntityType>
+        <Association Name="FK__Calificac__Codig__4F7CD00D">
+          <End Role="Asignaturas" Type="Self.Asignaturas" Multiplicity="0..1" />
+          <End Role="Calificaciones" Type="Self.Calificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignaturas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Calificaciones">
+              <PropertyRef Name="Codigo_Asignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Prueba_ColegioModelStoreContainer">
+          <EntitySet Name="Asignaturas" EntityType="Self.Asignaturas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calificaciones" EntityType="Self.Calificaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Calificac__Codig__4F7CD00D" Association="Self.FK__Calificac__Codig__4F7CD00D">
+            <End Role="Asignaturas" EntitySet="Asignaturas" />
+            <End Role="Calificaciones" EntitySet="Calificaciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Prueba_ColegioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Asignaturas">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Calificaciones" Relationship="Self.FK__Calificac__Codig__4F7CD00D" FromRole="Asignaturas" ToRole="Calificaciones" />
+        </EntityType>
+        <EntityType Name="Calificaciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Asignatura" Type="Int64" />
+          <Property Name="Nombre_Asignatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Calificacion" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Asignaturas" Relationship="Self.FK__Calificac__Codig__4F7CD00D" FromRole="Calificaciones" ToRole="Asignaturas" />
+        </EntityType>
+        <EntityType Name="Estudiantes">
+          <Key>
+            <PropertyRef Name="Identificación" />
+          </Key>
+          <Property Name="Identificación" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int16" />
+          <Property Name="Dirección" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Teléfono" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Profesores">
+          <Key>
+            <PropertyRef Name="Identificación" />
+          </Key>
+          <Property Name="Identificación" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int16" />
+          <Property Name="Dirección" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Teléfono" Type="Int64" />
+        </EntityType>
+        <Association Name="FK__Calificac__Codig__4F7CD00D">
+          <End Role="Asignaturas" Type="Self.Asignaturas" Multiplicity="0..1" />
+          <End Role="Calificaciones" Type="Self.Calificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignaturas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Calificaciones">
+              <PropertyRef Name="Codigo_Asignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaColegioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Asignaturas" EntityType="Self.Asignaturas" />
+          <EntitySet Name="Calificaciones" EntityType="Self.Calificaciones" />
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" />
+          <AssociationSet Name="FK__Calificac__Codig__4F7CD00D" Association="Self.FK__Calificac__Codig__4F7CD00D">
+            <End Role="Asignaturas" EntitySet="Asignaturas" />
+            <End Role="Calificaciones" EntitySet="Calificaciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Prueba_ColegioModelStoreContainer" CdmEntityContainer="PruebaColegioEntities">
+          <EntitySetMapping Name="Asignaturas">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.Asignaturas">
+              <MappingFragment StoreEntitySet="Asignaturas">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calificaciones">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.Calificaciones">
+              <MappingFragment StoreEntitySet="Calificaciones">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Codigo_Asignatura" ColumnName="Codigo_Asignatura" />
+                <ScalarProperty Name="Nombre_Asignatura" ColumnName="Nombre_Asignatura" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.Estudiantes">
+              <MappingFragment StoreEntitySet="Estudiantes">
+                <ScalarProperty Name="Identificación" ColumnName="Identificación" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Teléfono" ColumnName="Teléfono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesores">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.Profesores">
+              <MappingFragment StoreEntitySet="Profesores">
+                <ScalarProperty Name="Identificación" ColumnName="Identificación" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Teléfono" ColumnName="Teléfono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
