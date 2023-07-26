@@ -14,11 +14,20 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
     
     public partial class Estudiantes
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Estudiantes()
+        {
+            this.Calificaciones = new HashSet<Calificaciones>();
+        }
+    
         public long Identificacion { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public Nullable<short> Edad { get; set; }
         public string Direccion { get; set; }
         public Nullable<long> Telefono { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Calificaciones> Calificaciones { get; set; }
     }
 }

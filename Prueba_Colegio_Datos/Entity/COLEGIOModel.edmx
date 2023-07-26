@@ -12,16 +12,17 @@
           <Property Name="Codigo" Type="bigint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Calificaciones">
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
           <Property Name="Codigo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Año_academico" Type="int" />
+          <Property Name="Identificación_Alumno" Type="bigint" />
+          <Property Name="Nombre_Alumno" Type="varchar" MaxLength="50" />
           <Property Name="Codigo_Asignatura" Type="bigint" />
           <Property Name="Nombre_Asignatura" Type="varchar" MaxLength="50" />
-          <Property Name="Calificacion" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Calificacion" Type="decimal" Precision="4" Scale="2" />
         </EntityType>
         <EntityType Name="Estudiantes">
           <Key>
@@ -34,6 +35,17 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
           <Property Name="Telefono" Type="bigint" />
         </EntityType>
+        <EntityType Name="MateriasProfesor">
+          <Key>
+            <PropertyRef Name="Id_materiaprofesor" />
+          </Key>
+          <Property Name="Id_materiaprofesor" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Identificacion_Profesor" Type="bigint" />
+          <Property Name="Nombre_Profesor" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido_Profesor" Type="varchar" MaxLength="50" />
+          <Property Name="Codigo_Asignatura" Type="bigint" />
+          <Property Name="Nombre_Asignatura" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Profesores">
           <Key>
             <PropertyRef Name="Identificacion" />
@@ -45,18 +57,148 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
           <Property Name="Telefono" Type="bigint" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.vw_Alumnos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_Alumnos">
+          <Key>
+            <PropertyRef Name="Identificacion" />
+          </Key>
+          <Property Name="Identificacion" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" />
+          <Property Name="Edad" Type="smallint" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" />
+          <Property Name="Telefono" Type="bigint" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.vw_AlumnosProfesoresMaterias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_AlumnosProfesoresMaterias">
+          <Key>
+            <PropertyRef Name="Identificacion_Alumno" />
+            <PropertyRef Name="Aprobo" />
+          </Key>
+          <Property Name="Año_academico" Type="int" />
+          <Property Name="Identificacion_Alumno" Type="bigint" Nullable="false" />
+          <Property Name="Nombre_Alumno" Type="varchar" MaxLength="100" />
+          <Property Name="Codigo_Materia" Type="bigint" />
+          <Property Name="Nombre_Materia" Type="varchar" MaxLength="50" />
+          <Property Name="Identificacion_Profesor" Type="bigint" />
+          <Property Name="Nombre_Profesor" Type="varchar" MaxLength="50" />
+          <Property Name="Calificacion_Final" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Aprobo" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Calificac__Codig__1EA48E88">
+          <End Role="Asignaturas" Type="Self.Asignaturas" Multiplicity="0..1" />
+          <End Role="Calificaciones" Type="Self.Calificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignaturas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Calificaciones">
+              <PropertyRef Name="Codigo_Asignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Calificac__Ident__1DB06A4F">
+          <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="0..1" />
+          <End Role="Calificaciones" Type="Self.Calificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="Identificacion" />
+            </Principal>
+            <Dependent Role="Calificaciones">
+              <PropertyRef Name="Identificación_Alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MateriasP__Codig__09A971A2">
+          <End Role="Asignaturas" Type="Self.Asignaturas" Multiplicity="0..1" />
+          <End Role="MateriasProfesor" Type="Self.MateriasProfesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignaturas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="MateriasProfesor">
+              <PropertyRef Name="Codigo_Asignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MateriasP__Ident__08B54D69">
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="0..1" />
+          <End Role="MateriasProfesor" Type="Self.MateriasProfesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesores">
+              <PropertyRef Name="Identificacion" />
+            </Principal>
+            <Dependent Role="MateriasProfesor">
+              <PropertyRef Name="Identificacion_Profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_ActualizarAlumno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Identificacion" Type="bigint" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Edad" Type="smallint" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_ActualizarProfesor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Identificacion" Type="bigint" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Edad" Type="smallint" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarAlumno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Identificacion" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="Prueba_ColegioModelStoreContainer">
           <EntitySet Name="Asignaturas" EntityType="Self.Asignaturas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calificaciones" EntityType="Self.Calificaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MateriasProfesor" EntityType="Self.MateriasProfesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesores" EntityType="Self.Profesores" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Calificaciones" EntityType="Self.Calificaciones" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="vw_Alumnos" EntityType="Self.vw_Alumnos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Calificaciones].[Codigo] AS [Codigo], 
-    [Calificaciones].[Codigo_Asignatura] AS [Codigo_Asignatura], 
-    [Calificaciones].[Nombre_Asignatura] AS [Nombre_Asignatura], 
-    [Calificaciones].[Calificacion] AS [Calificacion]
-    FROM [dbo].[Calificaciones] AS [Calificaciones]</DefiningQuery>
+    [vw_Alumnos].[Identificacion] AS [Identificacion], 
+    [vw_Alumnos].[Nombre] AS [Nombre], 
+    [vw_Alumnos].[Apellido] AS [Apellido], 
+    [vw_Alumnos].[Edad] AS [Edad], 
+    [vw_Alumnos].[Direccion] AS [Direccion], 
+    [vw_Alumnos].[Telefono] AS [Telefono]
+    FROM [dbo].[vw_Alumnos] AS [vw_Alumnos]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_AlumnosProfesoresMaterias" EntityType="Self.vw_AlumnosProfesoresMaterias" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_AlumnosProfesoresMaterias].[Año_academico] AS [Año_academico], 
+    [vw_AlumnosProfesoresMaterias].[Identificacion_Alumno] AS [Identificacion_Alumno], 
+    [vw_AlumnosProfesoresMaterias].[Nombre_Alumno] AS [Nombre_Alumno], 
+    [vw_AlumnosProfesoresMaterias].[Codigo_Materia] AS [Codigo_Materia], 
+    [vw_AlumnosProfesoresMaterias].[Nombre_Materia] AS [Nombre_Materia], 
+    [vw_AlumnosProfesoresMaterias].[Identificacion_Profesor] AS [Identificacion_Profesor], 
+    [vw_AlumnosProfesoresMaterias].[Nombre_Profesor] AS [Nombre_Profesor], 
+    [vw_AlumnosProfesoresMaterias].[Calificacion_Final] AS [Calificacion_Final], 
+    [vw_AlumnosProfesoresMaterias].[Aprobo] AS [Aprobo]
+    FROM [dbo].[vw_AlumnosProfesoresMaterias] AS [vw_AlumnosProfesoresMaterias]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Calificac__Codig__1EA48E88" Association="Self.FK__Calificac__Codig__1EA48E88">
+            <End Role="Asignaturas" EntitySet="Asignaturas" />
+            <End Role="Calificaciones" EntitySet="Calificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Calificac__Ident__1DB06A4F" Association="Self.FK__Calificac__Ident__1DB06A4F">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="Calificaciones" EntitySet="Calificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MateriasP__Codig__09A971A2" Association="Self.FK__MateriasP__Codig__09A971A2">
+            <End Role="Asignaturas" EntitySet="Asignaturas" />
+            <End Role="MateriasProfesor" EntitySet="MateriasProfesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MateriasP__Ident__08B54D69" Association="Self.FK__MateriasP__Ident__08B54D69">
+            <End Role="Profesores" EntitySet="Profesores" />
+            <End Role="MateriasProfesor" EntitySet="MateriasProfesor" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -64,10 +206,48 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
       <Schema Namespace="Prueba_ColegioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PruebaColegioEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Estudiantes" EntityType="Prueba_ColegioModel.Estudiantes" />
-          <EntitySet Name="Calificaciones" EntityType="Prueba_ColegioModel.Calificaciones" />
           <EntitySet Name="Asignaturas" EntityType="Prueba_ColegioModel.Asignaturas" />
           <EntitySet Name="Profesores" EntityType="Prueba_ColegioModel.Profesores" />
-        </EntityContainer>
+          <FunctionImport Name="sp_ActualizarAlumno">
+            <Parameter Name="Identificacion" Mode="In" Type="Int64" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Edad" Mode="In" Type="Int16" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ActualizarProfesor">
+            <Parameter Name="Identificacion" Mode="In" Type="Int64" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Edad" Mode="In" Type="Int16" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarAlumno">
+          <Parameter Name="Identificacion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="MateriasProfesor" EntityType="Prueba_ColegioModel.MateriasProfesor" />
+          <AssociationSet Name="FK__MateriasP__Codig__09A971A2" Association="Prueba_ColegioModel.FK__MateriasP__Codig__09A971A2">
+            <End Role="Asignaturas" EntitySet="Asignaturas" />
+            <End Role="MateriasProfesor" EntitySet="MateriasProfesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MateriasP__Ident__08B54D69" Association="Prueba_ColegioModel.FK__MateriasP__Ident__08B54D69">
+            <End Role="Profesores" EntitySet="Profesores" />
+            <End Role="MateriasProfesor" EntitySet="MateriasProfesor" />
+          </AssociationSet>
+          <EntitySet Name="Calificaciones" EntityType="Prueba_ColegioModel.Calificaciones" />
+          <AssociationSet Name="FK__Calificac__Codig__1EA48E88" Association="Prueba_ColegioModel.FK__Calificac__Codig__1EA48E88">
+            <End Role="Asignaturas" EntitySet="Asignaturas" />
+            <End Role="Calificaciones" EntitySet="Calificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Calificac__Ident__1DB06A4F" Association="Prueba_ColegioModel.FK__Calificac__Ident__1DB06A4F">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="Calificaciones" EntitySet="Calificaciones" />
+          </AssociationSet>
+          <EntitySet Name="vw_Alumnos" EntityType="Prueba_ColegioModel.vw_Alumnos" />
+          <EntitySet Name="vw_AlumnosProfesoresMaterias" EntityType="Prueba_ColegioModel.vw_AlumnosProfesoresMaterias" />
+          </EntityContainer>
         <EntityType Name="Estudiantes">
           <Key>
             <PropertyRef Name="Identificacion" />
@@ -78,15 +258,7 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
           <Property Name="Edad" Type="Int16" />
           <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="Int64" />
-        </EntityType>
-        <EntityType Name="Calificaciones">
-          <Key>
-            <PropertyRef Name="Codigo" />
-          </Key>
-          <Property Name="Codigo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Codigo_Asignatura" Type="Int64" />
-          <Property Name="Nombre_Asignatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Calificacion" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Calificaciones" Relationship="Prueba_ColegioModel.FK__Calificac__Ident__1DB06A4F" FromRole="Estudiantes" ToRole="Calificaciones" />
         </EntityType>
         <EntityType Name="Asignaturas">
           <Key>
@@ -94,6 +266,8 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
           </Key>
           <Property Name="Codigo" Type="Int64" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MateriasProfesor" Relationship="Prueba_ColegioModel.FK__MateriasP__Codig__09A971A2" FromRole="Asignaturas" ToRole="MateriasProfesor" />
+          <NavigationProperty Name="Calificaciones" Relationship="Prueba_ColegioModel.FK__Calificac__Codig__1EA48E88" FromRole="Asignaturas" ToRole="Calificaciones" />
         </EntityType>
         <EntityType Name="Profesores">
           <Key>
@@ -105,8 +279,110 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
           <Property Name="Edad" Type="Int16" />
           <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="Int64" />
+          <NavigationProperty Name="MateriasProfesor" Relationship="Prueba_ColegioModel.FK__MateriasP__Ident__08B54D69" FromRole="Profesores" ToRole="MateriasProfesor" />
         </EntityType>
-      </Schema>
+        <EntityType Name="MateriasProfesor">
+          <Key>
+            <PropertyRef Name="Id_materiaprofesor" />
+          </Key>
+          <Property Name="Id_materiaprofesor" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Identificacion_Profesor" Type="Int64" />
+          <Property Name="Nombre_Profesor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido_Profesor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Asignatura" Type="Int64" />
+          <Property Name="Nombre_Asignatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Asignaturas" Relationship="Prueba_ColegioModel.FK__MateriasP__Codig__09A971A2" FromRole="MateriasProfesor" ToRole="Asignaturas" />
+          <NavigationProperty Name="Profesores" Relationship="Prueba_ColegioModel.FK__MateriasP__Ident__08B54D69" FromRole="MateriasProfesor" ToRole="Profesores" />
+        </EntityType>
+        <Association Name="FK__MateriasP__Codig__09A971A2">
+          <End Type="Prueba_ColegioModel.Asignaturas" Role="Asignaturas" Multiplicity="0..1" />
+          <End Type="Prueba_ColegioModel.MateriasProfesor" Role="MateriasProfesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignaturas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="MateriasProfesor">
+              <PropertyRef Name="Codigo_Asignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MateriasP__Ident__08B54D69">
+          <End Type="Prueba_ColegioModel.Profesores" Role="Profesores" Multiplicity="0..1" />
+          <End Type="Prueba_ColegioModel.MateriasProfesor" Role="MateriasProfesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesores">
+              <PropertyRef Name="Identificacion" />
+            </Principal>
+            <Dependent Role="MateriasProfesor">
+              <PropertyRef Name="Identificacion_Profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Calificaciones">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Año_academico" Type="Int32" />
+          <Property Name="Identificación_Alumno" Type="Int64" />
+          <Property Name="Nombre_Alumno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Asignatura" Type="Int64" />
+          <Property Name="Nombre_Asignatura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Calificacion" Type="Decimal" Precision="4" Scale="2" />
+          <NavigationProperty Name="Asignaturas" Relationship="Prueba_ColegioModel.FK__Calificac__Codig__1EA48E88" FromRole="Calificaciones" ToRole="Asignaturas" />
+          <NavigationProperty Name="Estudiantes" Relationship="Prueba_ColegioModel.FK__Calificac__Ident__1DB06A4F" FromRole="Calificaciones" ToRole="Estudiantes" />
+        </EntityType>
+        <Association Name="FK__Calificac__Codig__1EA48E88">
+          <End Type="Prueba_ColegioModel.Asignaturas" Role="Asignaturas" Multiplicity="0..1" />
+          <End Type="Prueba_ColegioModel.Calificaciones" Role="Calificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignaturas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Calificaciones">
+              <PropertyRef Name="Codigo_Asignatura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Calificac__Ident__1DB06A4F">
+          <End Type="Prueba_ColegioModel.Estudiantes" Role="Estudiantes" Multiplicity="0..1" />
+          <End Type="Prueba_ColegioModel.Calificaciones" Role="Calificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="Identificacion" />
+            </Principal>
+            <Dependent Role="Calificaciones">
+              <PropertyRef Name="Identificación_Alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vw_Alumnos">
+          <Key>
+            <PropertyRef Name="Identificacion" />
+          </Key>
+          <Property Name="Identificacion" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int16" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="Int64" />
+        </EntityType>
+        <EntityType Name="vw_AlumnosProfesoresMaterias">
+          <Key>
+            <PropertyRef Name="Identificacion_Alumno" />
+            <PropertyRef Name="Aprobo" />
+          </Key>
+          <Property Name="Año_academico" Type="Int32" />
+          <Property Name="Identificacion_Alumno" Type="Int64" Nullable="false" />
+          <Property Name="Nombre_Alumno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Materia" Type="Int64" />
+          <Property Name="Nombre_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Identificacion_Profesor" Type="Int64" />
+          <Property Name="Nombre_Profesor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Calificacion_Final" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Aprobo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -121,16 +397,6 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Calificaciones">
-            <EntityTypeMapping TypeName="Prueba_ColegioModel.Calificaciones">
-              <MappingFragment StoreEntitySet="Calificaciones">
-                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
-                <ScalarProperty Name="Nombre_Asignatura" ColumnName="Nombre_Asignatura" />
-                <ScalarProperty Name="Codigo_Asignatura" ColumnName="Codigo_Asignatura" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -151,6 +417,61 @@ advertencia 6002: La tabla o vista 'Prueba_Colegio.dbo.Calificaciones' no tiene 
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ActualizarAlumno" FunctionName="Prueba_ColegioModel.Store.sp_ActualizarAlumno" />
+          <FunctionImportMapping FunctionImportName="sp_ActualizarProfesor" FunctionName="Prueba_ColegioModel.Store.sp_ActualizarProfesor" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarAlumno" FunctionName="Prueba_ColegioModel.Store.sp_EliminarAlumno" />
+          <EntitySetMapping Name="MateriasProfesor">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.MateriasProfesor">
+              <MappingFragment StoreEntitySet="MateriasProfesor">
+                <ScalarProperty Name="Nombre_Asignatura" ColumnName="Nombre_Asignatura" />
+                <ScalarProperty Name="Codigo_Asignatura" ColumnName="Codigo_Asignatura" />
+                <ScalarProperty Name="Apellido_Profesor" ColumnName="Apellido_Profesor" />
+                <ScalarProperty Name="Nombre_Profesor" ColumnName="Nombre_Profesor" />
+                <ScalarProperty Name="Identificacion_Profesor" ColumnName="Identificacion_Profesor" />
+                <ScalarProperty Name="Id_materiaprofesor" ColumnName="Id_materiaprofesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calificaciones">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.Calificaciones">
+              <MappingFragment StoreEntitySet="Calificaciones">
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="Nombre_Asignatura" ColumnName="Nombre_Asignatura" />
+                <ScalarProperty Name="Codigo_Asignatura" ColumnName="Codigo_Asignatura" />
+                <ScalarProperty Name="Nombre_Alumno" ColumnName="Nombre_Alumno" />
+                <ScalarProperty Name="Identificación_Alumno" ColumnName="Identificación_Alumno" />
+                <ScalarProperty Name="Año_academico" ColumnName="Año_academico" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Alumnos">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.vw_Alumnos">
+              <MappingFragment StoreEntitySet="vw_Alumnos">
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_AlumnosProfesoresMaterias">
+            <EntityTypeMapping TypeName="Prueba_ColegioModel.vw_AlumnosProfesoresMaterias">
+              <MappingFragment StoreEntitySet="vw_AlumnosProfesoresMaterias">
+                <ScalarProperty Name="Aprobo" ColumnName="Aprobo" />
+                <ScalarProperty Name="Calificacion_Final" ColumnName="Calificacion_Final" />
+                <ScalarProperty Name="Nombre_Profesor" ColumnName="Nombre_Profesor" />
+                <ScalarProperty Name="Identificacion_Profesor" ColumnName="Identificacion_Profesor" />
+                <ScalarProperty Name="Nombre_Materia" ColumnName="Nombre_Materia" />
+                <ScalarProperty Name="Codigo_Materia" ColumnName="Codigo_Materia" />
+                <ScalarProperty Name="Nombre_Alumno" ColumnName="Nombre_Alumno" />
+                <ScalarProperty Name="Identificacion_Alumno" ColumnName="Identificacion_Alumno" />
+                <ScalarProperty Name="Año_academico" ColumnName="Año_academico" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

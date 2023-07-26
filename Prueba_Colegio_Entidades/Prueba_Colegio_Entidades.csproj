@@ -81,7 +81,16 @@
     <Compile Include="EntityDataModel\Estudiantes.cs">
       <DependentUpon>COLEGIOModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityDataModel\MateriasProfesor.cs">
+      <DependentUpon>COLEGIOModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityDataModel\Profesores.cs">
+      <DependentUpon>COLEGIOModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDataModel\vw_Alumnos.cs">
+      <DependentUpon>COLEGIOModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityDataModel\vw_AlumnosProfesoresMaterias.cs">
       <DependentUpon>COLEGIOModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

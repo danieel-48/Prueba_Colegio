@@ -68,6 +68,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\AsignaturasDA.cs" />
+    <Compile Include="DataAccess\EstudiantesDA.cs" />
     <Compile Include="DataAccess\ProfesoresDA.cs" />
     <Compile Include="Entity\COLEGIOModel.Context.cs">
       <AutoGen>True</AutoGen>

@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bussiness Logic\AsignaturasBL.cs" />
+    <Compile Include="Bussiness Logic\EstudiantesBL.cs" />
     <Compile Include="Bussiness Logic\ProfesoresBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

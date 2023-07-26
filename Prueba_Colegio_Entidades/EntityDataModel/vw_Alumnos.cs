@@ -12,22 +12,13 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Profesores
+    public partial class vw_Alumnos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Profesores()
-        {
-            this.MateriasProfesor = new HashSet<MateriasProfesor>();
-        }
-    
         public long Identificacion { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public Nullable<short> Edad { get; set; }
         public string Direccion { get; set; }
         public Nullable<long> Telefono { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MateriasProfesor> MateriasProfesor { get; set; }
     }
 }
