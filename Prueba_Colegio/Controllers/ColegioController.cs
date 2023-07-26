@@ -17,9 +17,6 @@ namespace Prueba_Colegio.Controllers
         ProfesoresBL profesoresBL;
         Profesores pf;
 
-       
-     
-
         [HttpPost]
 
         [Route("api/profesor")]
