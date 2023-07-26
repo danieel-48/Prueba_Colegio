@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Prueba_Colegio\Prueba_Colegio_Entidades\EntityDataModel
+namespace Prueba_Colegio_Entidades.EntityDataModel
 {
     using System;
     using System.Data.Entity;
@@ -25,9 +25,9 @@ namespace Prueba_Colegio\Prueba_Colegio_Entidades\EntityDataModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Asignaturas> Asignaturas { get; set; }
-        public virtual DbSet<Calificaciones> Calificaciones { get; set; }
         public virtual DbSet<Estudiantes> Estudiantes { get; set; }
+        public virtual DbSet<Calificaciones> Calificaciones { get; set; }
+        public virtual DbSet<Asignaturas> Asignaturas { get; set; }
         public virtual DbSet<Profesores> Profesores { get; set; }
     }
 }

@@ -18,7 +18,5 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
         public Nullable<long> Codigo_Asignatura { get; set; }
         public string Nombre_Asignatura { get; set; }
         public Nullable<decimal> Calificacion { get; set; }
-    
-        public virtual Asignaturas Asignaturas { get; set; }
     }
 }
