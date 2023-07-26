@@ -1,39 +1,53 @@
-﻿using System;
+﻿using Prueba_Colegio_BL.Bussiness_Logic;
+using Prueba_Colegio_Entidades.EntityDataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Prueba_Colegio.Controllers
 {
+
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class ColegioController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        ProfesoresBL profesoresBL;
+        Profesores pf;
 
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
+        [HttpPost]
 
-        // POST api/<controller>
-        public void Post([FromBody] string value)
-        {
-        }
+        [Route("api/profesor")]
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        public IHttpActionResult profesor([FromBody] Profesores item)
         {
-        }
+            profesoresBL = new ProfesoresBL();
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            var consulta = profesoresBL.Consultar_Existencia(item.Identificacion);
+
+            if(consulta == null)
+            {
+                List<Profesores> profesores = new List<Profesores>();
+                pf = new Profesores();
+
+                pf.Identificacion = item.Identificacion;
+                pf.Nombre = item.Nombre;
+                pf.Apellido = item.Apellido;
+                pf.Edad = item.Edad;
+                pf.Direccion = item.Direccion;
+                pf.Telefono = item.Telefono;
+
+                profesores.Add(pf);
+
+                profesoresBL.Registrar_Profesores(profesores);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Ya hay un registro existente");
+            }
         }
     }
 }

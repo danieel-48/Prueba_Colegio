@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{984B6FC3-A021-4AC8-A5C5-A6CAC9815C0A}</ProjectGuid>
+    <ProjectGuid>{1D064438-DD4B-45F0-968B-37C51BB59751}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Prueba_Colegio_Entidades</RootNamespace>
-    <AssemblyName>Prueba_Colegio_Entidades</AssemblyName>
+    <RootNamespace>Prueba_Colegio_BL</RootNamespace>
+    <AssemblyName>Prueba_Colegio_BL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -46,7 +46,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -67,37 +66,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityDataModel\Asignaturas.cs">
-      <DependentUpon>COLEGIOModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityDataModel\Calificaciones.cs">
-      <DependentUpon>COLEGIOModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityDataModel\COLEGIOModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>COLEGIOModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityDataModel\Estudiantes.cs">
-      <DependentUpon>COLEGIOModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityDataModel\Profesores.cs">
-      <DependentUpon>COLEGIOModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Bussiness Logic\ProfesoresBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EntityDataModel\COLEGIOModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>COLEGIOModel.cs</LastGenOutput>
-    </Content>
+    <ProjectReference Include="..\Prueba_Colegio_Datos\Prueba_Colegio_Datos.csproj">
+      <Project>{C236DE96-EAE5-4611-B590-F75255C9715F}</Project>
+      <Name>Prueba_Colegio_Datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prueba_Colegio_Entidades\Prueba_Colegio_Entidades.csproj">
+      <Project>{984B6FC3-A021-4AC8-A5C5-A6CAC9815C0A}</Project>
+      <Name>Prueba_Colegio_Entidades</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

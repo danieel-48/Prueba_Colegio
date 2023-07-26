@@ -5,11 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7cd133bf08e246fa9bcbf5312610449c" Name="Diagram1">
-        <EntityTypeShape EntityType="Prueba_ColegioModel.Asignaturas" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prueba_ColegioModel.Calificaciones" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prueba_ColegioModel.Estudiantes" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prueba_ColegioModel.Profesores" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="Prueba_ColegioModel.FK__Calificac__Codig__4F7CD00D" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.Estudiantes" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.Calificaciones" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.Asignaturas" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.Profesores" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

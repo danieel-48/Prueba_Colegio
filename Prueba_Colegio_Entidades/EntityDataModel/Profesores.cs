@@ -14,11 +14,11 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
     
     public partial class Profesores
     {
-        public long Identificación { get; set; }
+        public long Identificacion { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public Nullable<short> Edad { get; set; }
-        public string Dirección { get; set; }
-        public Nullable<long> Teléfono { get; set; }
+        public string Direccion { get; set; }
+        public Nullable<long> Telefono { get; set; }
     }
 }
