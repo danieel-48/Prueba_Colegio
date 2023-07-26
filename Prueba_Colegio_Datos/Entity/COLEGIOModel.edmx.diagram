@@ -6,10 +6,17 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7cd133bf08e246fa9bcbf5312610449c" Name="Diagram1">
         <EntityTypeShape EntityType="Prueba_ColegioModel.Estudiantes" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Prueba_ColegioModel.Calificaciones" Width="1.5" PointX="2.75" PointY="3.75" />
         <EntityTypeShape EntityType="Prueba_ColegioModel.Asignaturas" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="Prueba_ColegioModel.Profesores" Width="1.5" PointX="5.375" PointY="3.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="Prueba_ColegioModel.MateriasProfesor" Width="1.5" PointX="8.75" PointY="3.625" />
+        <AssociationConnector Association="Prueba_ColegioModel.FK__MateriasP__Codig__09A971A2" />
+        <AssociationConnector Association="Prueba_ColegioModel.FK__MateriasP__Ident__08B54D69" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.Calificaciones" Width="1.5" PointX="7.625" PointY="0.75" />
+        <AssociationConnector Association="Prueba_ColegioModel.FK__Calificac__Codig__1EA48E88" />
+        <AssociationConnector Association="Prueba_ColegioModel.FK__Calificac__Ident__1DB06A4F" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.vw_Alumnos" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Prueba_ColegioModel.vw_AlumnosProfesoresMaterias" Width="1.5" PointX="0.75" PointY="7.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

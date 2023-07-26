@@ -12,6 +12,8 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class PruebaColegioEntities : DbContext
     {
@@ -26,8 +28,78 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
         }
     
         public virtual DbSet<Estudiantes> Estudiantes { get; set; }
-        public virtual DbSet<Calificaciones> Calificaciones { get; set; }
         public virtual DbSet<Asignaturas> Asignaturas { get; set; }
         public virtual DbSet<Profesores> Profesores { get; set; }
+        public virtual DbSet<MateriasProfesor> MateriasProfesor { get; set; }
+        public virtual DbSet<Calificaciones> Calificaciones { get; set; }
+        public virtual DbSet<vw_Alumnos> vw_Alumnos { get; set; }
+        public virtual DbSet<vw_AlumnosProfesoresMaterias> vw_AlumnosProfesoresMaterias { get; set; }
+    
+        public virtual int sp_ActualizarAlumno(Nullable<long> identificacion, string nombre, string apellido, Nullable<short> edad, string direccion, Nullable<long> telefono)
+        {
+            var identificacionParameter = identificacion.HasValue ?
+                new ObjectParameter("Identificacion", identificacion) :
+                new ObjectParameter("Identificacion", typeof(long));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var edadParameter = edad.HasValue ?
+                new ObjectParameter("Edad", edad) :
+                new ObjectParameter("Edad", typeof(short));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var telefonoParameter = telefono.HasValue ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ActualizarAlumno", identificacionParameter, nombreParameter, apellidoParameter, edadParameter, direccionParameter, telefonoParameter);
+        }
+    
+        public virtual int sp_ActualizarProfesor(Nullable<long> identificacion, string nombre, string apellido, Nullable<short> edad, string direccion, Nullable<long> telefono)
+        {
+            var identificacionParameter = identificacion.HasValue ?
+                new ObjectParameter("Identificacion", identificacion) :
+                new ObjectParameter("Identificacion", typeof(long));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var edadParameter = edad.HasValue ?
+                new ObjectParameter("Edad", edad) :
+                new ObjectParameter("Edad", typeof(short));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            var telefonoParameter = telefono.HasValue ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ActualizarProfesor", identificacionParameter, nombreParameter, apellidoParameter, edadParameter, direccionParameter, telefonoParameter);
+        }
+    
+        public virtual int sp_EliminarAlumno(Nullable<long> identificacion)
+        {
+            var identificacionParameter = identificacion.HasValue ?
+                new ObjectParameter("Identificacion", identificacion) :
+                new ObjectParameter("Identificacion", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EliminarAlumno", identificacionParameter);
+        }
     }
 }

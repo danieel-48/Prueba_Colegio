@@ -25,16 +25,61 @@ namespace Prueba_Colegio_Datos.DataAccess
 
         }
 
-        public Profesores Consultar_Existencia(long identificacion)
+        public Profesores Actualizar_Profesor(int id, Profesores item)
+        {
+            context = new PruebaColegioEntities();
+
+            context.Configuration.AutoDetectChangesEnabled = false;
+            context.Configuration.ValidateOnSaveEnabled = false;
+
+            context.sp_ActualizarProfesor(id, item.Nombre, item.Apellido, item.Edad, item.Direccion, item.Telefono);
+            context.SaveChanges();
+
+            return item;
+            
+        }
+        public List<Profesores> Consultar()
         {
             context = new PruebaColegioEntities();
 
             var consulta = (from db in context.Profesores
-                            where db.Identificacion == identificacion
+                            select db).ToList();
+
+            return consulta;
+        }
+        public List<MateriasProfesor> Registrar_MateriaProfesor(List<MateriasProfesor> mprofesores)
+        {
+            context = new PruebaColegioEntities();
+            context.Configuration.AutoDetectChangesEnabled = false;
+            context.Configuration.ValidateOnSaveEnabled = false;
+
+            foreach (var item in mprofesores)
+            {
+                context.MateriasProfesor.Add(item);
+                context.SaveChanges();
+            }
+            return mprofesores;
+
+        }
+        public MateriasProfesor Consultar_Materia(long identificacion)
+        {
+            context = new PruebaColegioEntities();
+
+            var consulta = (from db in context.MateriasProfesor
+                            where db.Identificacion_Profesor == identificacion
                             select db).FirstOrDefault();
 
             return consulta;
+        }
+        public MateriasProfesor Consultar_Asignatura(long cod)
+        {
+            context = new PruebaColegioEntities();
 
+            var consulta = (from db in context.MateriasProfesor
+                            where db.Codigo_Asignatura == cod
+                            select db).FirstOrDefault();
+
+            return consulta;
         }
     }
 }

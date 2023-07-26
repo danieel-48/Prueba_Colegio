@@ -14,7 +14,19 @@ namespace Prueba_Colegio_Entidades.EntityDataModel
     
     public partial class Asignaturas
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Asignaturas()
+        {
+            this.MateriasProfesor = new HashSet<MateriasProfesor>();
+            this.Calificaciones = new HashSet<Calificaciones>();
+        }
+    
         public long Codigo { get; set; }
         public string Nombre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MateriasProfesor> MateriasProfesor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Calificaciones> Calificaciones { get; set; }
     }
 }

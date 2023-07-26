@@ -19,10 +19,34 @@ namespace Prueba_Colegio_BL.Bussiness_Logic
             profesoresDA.Registrar_Profesor(profesores);
             return profesores;
         }
-        public Profesores Consultar_Existencia(long identificacion)
+        public List<Profesores> Consultar()
         {
             profesoresDA = new ProfesoresDA();
-            var consulta = profesoresDA.Consultar_Existencia(identificacion);
+            var consulta = profesoresDA.Consultar();
+            return consulta;
+        }
+        public Profesores Actualizar_Profesor(int id, Profesores item)
+        {
+            profesoresDA = new ProfesoresDA();
+            profesoresDA.Actualizar_Profesor(id, item);
+            return item;
+        }
+        public List<MateriasProfesor> Registrar_MateriaProfesores(List<MateriasProfesor> mprofesores)
+        {
+            profesoresDA = new ProfesoresDA();
+            profesoresDA.Registrar_MateriaProfesor(mprofesores);
+            return mprofesores;
+        }
+        public MateriasProfesor Consultar_Materia(long identificacion)
+        {
+            profesoresDA = new ProfesoresDA();
+            var consulta = profesoresDA.Consultar_Materia(identificacion);
+            return consulta;
+        }
+        public MateriasProfesor Consultar_Asignatura(long cod)
+        {
+            profesoresDA = new ProfesoresDA();
+            var consulta = profesoresDA.Consultar_Asignatura(cod);
             return consulta;
         }
     }
